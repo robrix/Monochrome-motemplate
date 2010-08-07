@@ -26,17 +26,21 @@
 
 <$foreach Attribute noninheritedAttributes do$>
 <$if Attribute.hasDefinedAttributeType$>
-@dynamic <$Attribute.name$>;
-
 <$if Attribute.hasScalarAttributeType$>
--(<$Attribute.scalarAttributeType$>)<$Attribute.name$>Value {
-	NSNumber *result = self.<$Attribute.name$>;
-	return result ? [result <$Attribute.scalarAttributeType.camelCaseString$>Value] : 0;
+-(<$Attribute.scalarAttributeType$>)<$Attribute.name$> {
+	[self willAccessValueForKey: @"<$Attribute.name$>"];
+	<$Attribute.scalarAttributeType$> _<$Attribute.name$> = <$Attribute.name$>;
+	[self didAccessValueForKey: @"<$Attribute.name$>"];
+	return _<$Attribute.name$>;
 }
 
--(void)set<$Attribute.name.initialCapitalString$>Value:(<$Attribute.scalarAttributeType$>)_value {
-	self.<$Attribute.name$> = [NSNumber numberWith<$Attribute.scalarAttributeType.camelCaseString.initialCapitalString$>: _value];
+-(void)set<$Attribute.name.initialCapitalString$>:(<$Attribute.scalarAttributeType$>)_<$Attribute.name$> {
+	[self willChangeValueForKey: @"<$Attribute.name$>"];
+	<$Attribute.name$> = _<$Attribute.name$>;
+	[self didChangeValueForKey: @"<$Attribute.name$>"];
 }
+<$else$>
+@dynamic <$Attribute.name$>;
 <$endif$>
 <$endif$>
 <$endforeach do$>

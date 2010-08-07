@@ -13,7 +13,15 @@
 @interface <$managedObjectClassName$>ID : NSManagedObjectID {}
 @end
 
-@interface _<$managedObjectClassName$> : <$customSuperentity$> {}
+@interface _<$managedObjectClassName$> : <$customSuperentity$> {
+<$foreach Attribute noninheritedAttributes do$>
+<$if Attribute.hasDefinedAttributeType$>
+<$if Attribute.hasScalarAttributeType$>
+	<$Attribute.scalarAttributeType$> <$Attribute.name$>;
+<$endif$>
+<$endif$>
+<$endforeach do$>
+}
 
 +(NSEntityDescription *)entityInManagedObjectContext:(NSManagedObjectContext *)_context;
 +(id)insertInManagedObjectContext:(NSManagedObjectContext *)_context;
@@ -22,9 +30,10 @@
 
 <$foreach Attribute noninheritedAttributes do$>
 <$if Attribute.hasDefinedAttributeType$>
-@property (retain) <$Attribute.objectAttributeType$> *<$Attribute.name$>;
 <$if Attribute.hasScalarAttributeType$>
-@property (assign) <$Attribute.scalarAttributeType$> <$Attribute.name$>Value;
+@property (nonatomic, assign) <$Attribute.scalarAttributeType$> <$Attribute.name$>;
+<$else$>
+@property (nonatomic, retain) <$Attribute.objectAttributeType$> *<$Attribute.name$>;
 <$endif$>
 <$endif$>
 <$endforeach do$>
