@@ -1,0 +1,62 @@
+// _<$managedObjectClassName$>.h
+// Created by Rob Rix on <$ date %Y-%m-%d $>
+// Copyright 2009 Monochrome Industries
+
+// DO NOT EDIT. This file is machine-generated and constantly overwritten.
+// Make changes to <$managedObjectClassName$>.h instead.
+
+#import <CoreData/CoreData.h>
+<$if hasCustomSuperentity$>#import “<$customSuperentity$>.h”<$endif$>
+
+<$foreach Relationship noninheritedRelationships do$>@class <$Relationship.destinationEntity.managedObjectClassName$>;
+<$endforeach do$>
+@interface <$managedObjectClassName$>ID : NSManagedObjectID {}
+@end
+
+@interface _<$managedObjectClassName$> : <$customSuperentity$> {}
+
++(NSEntityDescription *)entityInManagedObjectContext:(NSManagedObjectContext *)_context;
++(id)insertInManagedObjectContext:(NSManagedObjectContext *)_context;
+
+@property (readonly) <$managedObjectClassName$>ID *objectID;
+
+<$foreach Attribute noninheritedAttributes do$>
+<$if Attribute.hasDefinedAttributeType$>
+@property (retain) <$Attribute.objectAttributeType$> *<$Attribute.name$>;
+<$if Attribute.hasScalarAttributeType$>
+@property (assign) <$Attribute.scalarAttributeType$> <$Attribute.name$>Value;
+<$endif$>
+<$endif$>
+<$endforeach do$>
+<$foreach Relationship noninheritedRelationships do$>
+<$if Relationship.isToMany$>
+@property (copy) NSSet *<$Relationship.name$>;
+@property (readonly, copy) NSMutableSet *mutable<$Relationship.name.initialCapitalString$>;
+<$else$>
+@property (retain) <$Relationship.destinationEntity.managedObjectClassName$> *<$Relationship.name$>;
+<$endif$>
+<$endforeach do$>
+<$foreach FetchRequest prettyFetchRequests do$>
+<$if FetchRequest.singleResult$>
++(id)fetch<$FetchRequest.name.initialCapitalString$>:(NSManagedObjectContext *)_context <$foreach Binding FetchRequest.bindings do2$><$Binding.name$>:(<$Binding.type$>)_<$Binding.name$><$endforeach do2$>;
++(id)fetch<$FetchRequest.name.initialCapitalString$>:(NSManagedObjectContext *)_context <$foreach Binding FetchRequest.bindings do2$><$Binding.name$>:(<$Binding.type$>)_<$Binding.name$><$endforeach do2$> error:(NSError **)_error;
+<$else$>
++(NSArray *)fetch<$FetchRequest.name.initialCapitalString$>:(NSManagedObjectContext *)_context <$foreach Binding FetchRequest.bindings do2$><$Binding.name$>:(<$Binding.type$>)_<$Binding.name$><$endforeach do2$>;
++(NSArray *)fetch<$FetchRequest.name.initialCapitalString$>:(NSManagedObjectContext *)_context <$foreach Binding FetchRequest.bindings do2$><$Binding.name$>:(<$Binding.type$>)_<$Binding.name$><$endforeach do2$> error:(NSError **)_error;
+<$endif$>
+<$endforeach do$>
+@end
+
+@interface _<$managedObjectClassName$> (_<$managedObjectClassName$>CoreDataGeneratedAccessors)
+<$foreach Relationship noninheritedRelationships do$>
+<$if Relationship.isToMany$>
+// add/remove many objects
+-(void)add<$Relationship.name.initialCapitalString$>:(NSSet *)_value;
+-(void)remove<$Relationship.name.initialCapitalString$>:(NSSet *)_value;
+
+// add/remove single objects
+-(void)add<$Relationship.name.initialCapitalString$>Object:(<$Relationship.destinationEntity.managedObjectClassName$> *)_value;
+-(void)remove<$Relationship.name.initialCapitalString$>Object:(<$Relationship.destinationEntity.managedObjectClassName$> *)_value;
+<$endif$>
+<$endforeach$>
+@end

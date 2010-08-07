@@ -1,0 +1,11 @@
+// <$managedObjectClassName$>.m
+// Created by Rob Rix on <$ date %Y-%m-%d $>
+// Copyright 2009 Monochrome Industries
+
+#import "<$managedObjectClassName$>.h"
+
+@implementation <$managedObjectClassName$>
+
+
+
+@end

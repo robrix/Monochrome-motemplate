@@ -1,0 +1,8 @@
+// <$managedObjectClassName$>.h
+// Created by Rob Rix on <$ date %Y-%m-%d $>
+// Copyright 2009 Monochrome Industries
+
+#import "_<$managedObjectClassName$>.h"
+
+@interface <$managedObjectClassName$> : _<$managedObjectClassName$> {}
+@end
